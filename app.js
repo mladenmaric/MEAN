@@ -26,12 +26,6 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 
 // routing
-
-app.get('*', (req, res, next) => {
-    console.log('404');
-    next();
-});
-
 app.get('/', (req, res, next) => {
     res.send('Hello, world');
     // next();
