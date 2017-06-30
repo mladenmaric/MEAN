@@ -1,13 +1,26 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var ejs = require('ejs');
+var mongoose = require('mongoose');
 var path = require('path');
 var cors = require('cors');
 var env = require('node-env-file');
-var app = express();
+var jwt = require('jsonwebtoken');
+var morgan = require('morgan');
+
+var app = module.exports = express();
+
+var config = require('./config/config');
 
 var port = process.env.PORT || 3000;
 
+// mongo db
+mongoose.connect(config.database);
+
+// jwt token secret
+app.set('superSecret', config.secret);
+
+// use morgan to log requests to the console
+app.use(morgan('dev'));
 
 // env file
 env(path.join(__dirname, '.env'));
@@ -19,24 +32,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // cors
 app.use(cors());
 
-// view engine
-app.set('view engine', 'ejs');
-
 // static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// routing
-app.get('/', (req, res, next) => {
-    res.send('Hello, world');
-    // next();
-});
-
-app.use('/api/tasks', require('./routes/tasks'));
+app.use('/api/auth', require('./routes/auth'));
 
 app.listen(port, (err) => {
-    if (err) {
-        console.log('err');
-    } else {
-        console.log('Server started on port ' + port);
-    }
+    if (err) throw err;
+    console.log('Server started on port ' + port);
 });
