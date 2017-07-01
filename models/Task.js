@@ -4,7 +4,8 @@ var Schema = mongoose.Schema;
 var taskSchema = new Schema({
     name: String,
     description: String,
-    done: Boolean
+    done: Boolean,
+    userId: String
 });
 
 var Task = mongoose.model('Task', taskSchema);

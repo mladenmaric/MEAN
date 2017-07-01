@@ -10,7 +10,7 @@ function registerUser(e) {
 
     $.ajax({
         type: "POST",
-        url: "/api/auth/register",
+        url: "/api/register",
         dataType: "json",
         success: function(data) {
             console.log(data);

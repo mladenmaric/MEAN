@@ -8,13 +8,14 @@ function loginUser(e) {
 
     $.ajax({
         type: "POST",
-        url: "/api/auth/login",
+        url: "/api/authenticate",
         dataType: "json",
         success: function(data) {
             if (data.success) {
+                localStorage.setItem('token', data.token);
                 window.location = "tasks.html";
             } else {
-                alert(data.msg);
+                alert(data.message);
             }
         },
 

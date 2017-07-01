@@ -35,7 +35,7 @@ app.use(cors());
 // static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/auth', require('./routes/auth'));
+app.use('/api', require('./routes/api'));
 
 app.listen(port, (err) => {
     if (err) throw err;
